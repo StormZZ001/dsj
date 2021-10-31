@@ -49,3 +49,22 @@ $('#form_reg').on('submit', function (e) {
         $('#link_log').click()
     })
 })
+
+//发起登录的ajax请求
+$('#form_log').submit(function(e){
+    //1.阻止表单的默认提交行为
+    e.preventDefault()
+    $.ajax({
+        url:'http://api-breakingnews-web.itheima.net/api/login',
+        method:'POST',
+        //快速获取表单中的数据
+        data:$(this).serialize(),
+        success:function (res) { 
+            if(res.status !== 0){
+                return layer.msg(re.messsage)
+            }
+            layer.msg('登录成功')
+            location.href = 'index.html'
+        }
+    })
+})
