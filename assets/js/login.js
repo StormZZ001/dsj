@@ -40,8 +40,8 @@ $('#form_reg').on('submit', function (e) {
         username: $('#form_reg [name=username]').val(),
         password: $('#form_reg [name=password]').val()
     }
-    $.post('/api/reguser', data, function (res) {
-        if (res.status !== 0) {
+    $.post('/api/reg', data, function (res) {
+        if (res.code !== 0) {
             return layer.msg(res.message)
         }
         layer.msg('注册成功，请登录！')
@@ -60,7 +60,7 @@ $('#form_log').submit(function(e){
         //快速获取表单中的数据
         data:$(this).serialize(),
         success:function (res) { 
-            if(res.status !== 0){
+            if(res.code !== 0){
                 return layer.msg(re.messsage)
             }
             layer.msg('登录成功')
