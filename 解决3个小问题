@@ -1,0 +1,10 @@
+1.解决3个小问题
+<iframe name="fm" src="/home/dashboard.html" frameborder="0"></iframe>
+2.为 `首页` 对应的导航 Item 项添加 `layui-this` 属性：
+<li class="layui-nav-item layui-this">
+  <a href="/home/dashboard.html" target="fm"><span class="iconfont icon-home"></span>首页</a>
+</li>
+3.强制清除<a>链接的CSS3动画：
+a{
+    transition:none !important
+}
