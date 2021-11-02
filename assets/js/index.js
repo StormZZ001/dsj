@@ -1,17 +1,42 @@
 $(function () {
-
+    // 调用获取用户的基本信息的方法
+    getUserInfo()
 })
 var layer = layui.layer
-//获取用户的基本信息
+// 获取用户的基本信息
 function getUserInfo() {
     $.ajax({
-        method:'GET',
-        url:'/my/userinfo',
-        Headers:{
-            Authorization:localStorage.getItem('token') || ''
+        method: 'GET',
+        url: '/my/userinfo',
+        // headers 就是请求头配置对象
+        headers: {
+            Authorization: localStorage.getItem('token') || ''
         },
-        success:function (res) { 
-            console.log(res)
-         }
+        success: function (res) {
+            if (res.code !== 0) {
+                return layer.msg('获取用户信息失败！')
+            }
+            // 调用 renderAvatar 渲染用户的头像
+            renderAvatar(res.data)
+        }
     })
+}
+//渲染用户的头像
+function renderAvatar(user){
+    //1.获取用户的名称
+    var name = user.nickname || user.username
+    console.log(name)
+    //2.设置欢迎用户的名称文本
+    $('.welcome').html('欢迎&nbsp;&nbsp;'+name)
+    //3.按需渲染用户的图片头像
+    if(user.user_pic !== null){
+        //3.1渲染图片头像
+        $('.layui-nav-img').attr('src',user.user_pic).show()
+        $('.text-avatar').hide()
+    }else{
+        //3.2渲染文本头像
+        $('.layui-nav-img').hide()
+        var text = name[0].toUpperCase()
+        $('.text-avatar').html(text).show()
+    }
 }
