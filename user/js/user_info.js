@@ -24,3 +24,10 @@ function initUserInfo() {
         }
     })
 }
+
+// 实现表单的重置效果
+$('#btnReset').on('click',function (e) { 
+    //1.阻止表单的默认提交行为
+    e.preventDefault();
+    initUserInfo()
+ })
