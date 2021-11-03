@@ -18,22 +18,35 @@ function getUserInfo() {
             }
             // 调用 renderAvatar 渲染用户的头像
             renderAvatar(res.data)
+        },
+        // 无论成功还是失败，最终都会调用这个
+        complete: function (res) {
+            console.log('执行了complete回调')
+            console.log(res)
+            //在 res 中可以使用 res.responseJSON拿到服务器响应回来的数据
+            console.log(res.responseJSON)
+            if(res.responseJSON.code === 1 &&res.responseJSON.message === '身份认证失败！'){
+                //强制清除token
+                localStorage.removeItem('token')
+                //强制跳转到登录页面
+                location.href = 'login.html'
+            }
         }
     })
 }
 //渲染用户的头像
-function renderAvatar(user){
+function renderAvatar(user) {
     //1.获取用户的名称
     var name = user.nickname || user.username
     console.log(name)
     //2.设置欢迎用户的名称文本
-    $('.welcome').html('欢迎&nbsp;&nbsp;'+name)
+    $('.welcome').html('欢迎&nbsp;&nbsp;' + name)
     //3.按需渲染用户的图片头像
-    if(user.user_pic !== null){
+    if (user.user_pic !== null) {
         //3.1渲染图片头像
-        $('.layui-nav-img').attr('src',user.user_pic).show()
+        $('.layui-nav-img').attr('src', user.user_pic).show()
         $('.text-avatar').hide()
-    }else{
+    } else {
         //3.2渲染文本头像
         $('.layui-nav-img').hide()
         var text = name[0].toUpperCase()
@@ -43,9 +56,9 @@ function renderAvatar(user){
 //实现退出功能
 var layer = layui.layer
 //点击按钮,实现退出功能
-$('#btnLogout').on('click',function () { 
+$('#btnLogout').on('click', function () {
     //提示用户是否确认退出
-    layer.confirm('确定退出登录?',{icon:3,title:'提示'},function (index) { 
+    layer.confirm('确定退出登录?', { icon: 3, title: '提示' }, function (index) {
         //do something
         //1.清空本地存储中的token
         localStorage.removeItem('token')
@@ -54,5 +67,5 @@ $('#btnLogout').on('click',function () {
 
         //关闭confirm询问框
         layer.close(index)
-     })
- })
+    })
+})
