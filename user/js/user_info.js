@@ -10,6 +10,7 @@ $(function () {
     initUserInfo()
 })
 var layer = layui.layer
+var form = layui.form
 function initUserInfo() {
     $.ajax({
         method: 'GET',
@@ -19,6 +20,7 @@ function initUserInfo() {
                 return layer.msg('获取用户信息失败')
             }
             console.log(res)
+            form.val('formUserInfo',res.data)
         }
     })
 }
