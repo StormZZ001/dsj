@@ -61,7 +61,7 @@ $('#form_log').submit(function(e){
         data:$(this).serialize(),
         success:function (res) { 
             if(res.code !== 0){
-                return layer.msg(re.messsage)
+                return layer.msg(res.messsage)
             }
             layer.msg('登录成功')
             //登录成功得到的 token 字符串，保存到 localStorage 中去
